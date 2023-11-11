@@ -68,7 +68,7 @@ public class ControllerV1 {
 
     // 4. URL경로에 붙어 있는 데이터 읽기
     // ex: /member/kim/107
-    @GetMapping("/member/{userName}/{userNo}")
+    @RequestMapping("/member/{userName}/{userNo}")
     public String member(
             @PathVariable String userName,
             @PathVariable  int userNo){
