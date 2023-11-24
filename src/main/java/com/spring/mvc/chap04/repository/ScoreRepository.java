@@ -2,6 +2,7 @@ package com.spring.mvc.chap04.repository;
 
 
 import com.spring.mvc.chap04.entity.Score;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
