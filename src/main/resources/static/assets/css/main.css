@@ -18,3 +18,26 @@ button {
     width: 60%;
     margin: 100px auto;
 }
+/* 페이지 스타일 */
+/* pagination style */
+.bottom-section {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.bottom-section nav {
+    flex: 1;
+    justify-content: center;
+}
+
+
+.pagination-custom a {
+    color: #444 !important;
+}
+
+.pagination-custom li.active a,
+.pagination-custom li:hover a {
+    background: #333 !important;
+    color: #fff !important;
+}
