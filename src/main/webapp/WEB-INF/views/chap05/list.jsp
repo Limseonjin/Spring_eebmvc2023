@@ -33,6 +33,27 @@
         <h1 class="main-title">꾸러기 게시판</h1>
         <button class="add-btn">새 글 쓰기</button>
     </div>
+    <div class="top-section">
+        <!-- 검색창 영역 -->
+        <div class="search">
+            <form action="/board/list" method="get">
+
+                <select class="form-select" name="type" id="search-type">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="writer">작성자</option>
+                    <option value="tc">제목+내용</option>
+                </select>
+
+                <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+
+            </form>
+        </div>
+    </div>
 
     <div class="card-container">
 
@@ -72,17 +93,24 @@
         <!-- 페이지 버튼 영역 -->
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-lg pagination-custom">
+                <c:if test="${maker.page.pageNo != 1}">
+                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;&lt;</a></li>
+                </c:if>
                 <c:if test="${maker.prev}">
                 <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}">prev</a></li>
                 </c:if>
 
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}" step="1">
-                    <li data-page-num="" class="page-item">
+                    <li data-page-num="${i}" class="page-item">
                         <a class="page-link" href="/board/list?pageNo=${i}">${i}</a>
                     </li>
                 </c:forEach>
                 <c:if test="${maker.next}">
                 <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end+1}">next</a></li>
+                </c:if>
+                <c:if test="${maker.page.pageNo != maker.finalPage}||${maker.page.pageNo != 0}">
+                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a>
+                    </li>
                 </c:if>
             </ul>
         </nav>
@@ -198,6 +226,36 @@
         window.location.href = '/board/write';
     };
 
+    //현재 위치한 페이지에 active 스타일 부여
+    function appendPageActive(){
+        //현재 서버에서 내려준 페이지 번호
+        const currPage = '${maker.page.pageNo}'
+        /*
+        * li태그들을 전부 확인해서 currPage와 일치하는 li를 찾고
+        * active 클랙스 붙이기
+        * */
+        const $ul = document.querySelector('.pagination')
+        const $liList = [...$ul.children];
+        $liList.forEach($li => {
+            if (currPage === $li.dataset.pageNum){
+                $li.classList.add('active');
+            }
+        })
+    }
+
+    //검색조건 셀렉트 박스 옵션타입 고정하기(selected)
+    function fixSearchOption(){
+        //셀렉박스에 option태그 전부 가져옴
+        const $options = [...document.getElementById('search-type').children];
+        $options.forEach($options => {
+            if ($options.value === '${s.type}'){
+                $options.setAttribute('selected','selected');
+            }
+        })
+
+    }
+    fixSearchOption()
+    appendPageActive()
 
 
 </script>

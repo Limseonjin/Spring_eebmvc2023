@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.common.Page;
 import com.spring.mvc.chap05.common.PageMaker;
+import com.spring.mvc.chap05.common.Search;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.service.BoardService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,16 +23,17 @@ public class BoardController {
     private final BoardService boardService;
     // 1. 목록 조회 요청 (/board/list : GET)
     @GetMapping("/list")
-    public String list(Page page, Model model){
+    public String list(@ModelAttribute("s") Search page, Model model){
         System.out.println("/list Get!");
         System.out.println(page);
         List<BoardListResponseDTO> dtoList = boardService.getList(page);
 
         // 페이징 계산 알고리즘 적용
-        PageMaker maker = new PageMaker(page, boardService.getCount());
+        PageMaker maker = new PageMaker(page, boardService.getCount(page));
 
         model.addAttribute("bList",dtoList);
         model.addAttribute("maker",maker);
+//        model.addAttribute("s",page);
         return "chap05/list";
     }
     // 2. 글쓰기 화면 요청 (/board/write : GET)
