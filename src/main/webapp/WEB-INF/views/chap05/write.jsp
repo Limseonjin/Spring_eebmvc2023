@@ -99,7 +99,7 @@
         <label for="content">내용</label>
         <textarea id="content" name="content" maxlength="200" required></textarea>
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
+            <button class="list-btn" type="button" onclick="window.location.href='/board/list?amount=${s.amount}&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}'">목록</button>
             <button type="submit">글쓰기</button>
         </div>
     </form>

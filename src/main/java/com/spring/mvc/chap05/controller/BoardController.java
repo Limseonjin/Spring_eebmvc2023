@@ -59,7 +59,7 @@ public class BoardController {
     }
     // 5. 글 상세보기 요청 (/board/detail : GET)
     @GetMapping("/detail")
-    public String detail(int bno, Model model) {
+    public String detail(int bno,@ModelAttribute("s") Search search, Model model) {
         System.out.println("/board/detail : GET");
         model.addAttribute("b", boardService.getDetail(bno));
         return "chap05/detail";

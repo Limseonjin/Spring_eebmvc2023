@@ -53,6 +53,13 @@
 
             </form>
         </div>
+
+        <div class="amount">
+            <a href="/board/list?amount=6&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">6</a>
+            <a href="/board/list?amount=18&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">18</a>
+            <a href="/board/list?amount=30&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">30</a>
+        </div>
+
     </div>
 
     <div class="card-container">
@@ -94,22 +101,22 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-lg pagination-custom">
                 <c:if test="${maker.page.pageNo != 1}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;&lt;</a></li>
+                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=1&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a></li>
                 </c:if>
                 <c:if test="${maker.prev}">
-                <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}">prev</a></li>
+                <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">prev</a></li>
                 </c:if>
 
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}" step="1">
                     <li data-page-num="${i}" class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${i}">${i}</a>
+                        <a class="page-link" href="/board/list?pageNo=${i}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">${i}</a>
                     </li>
                 </c:forEach>
                 <c:if test="${maker.next}">
-                <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end+1}">next</a></li>
+                <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end+1}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">next</a></li>
                 </c:if>
-                <c:if test="${maker.page.pageNo != maker.finalPage}||${maker.page.pageNo != 0}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a>
+                <c:if test="${maker.page.pageNo != maker.finalPage}">
+                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
                     </li>
                 </c:if>
             </ul>
@@ -167,7 +174,7 @@
             // section태그에 붙은 글번호 읽기
             const bno = e.target.closest('section.card').dataset.bno;
             // 요청 보내기
-            window.location.href= '/board/detail?bno=' + bno;
+            window.location.href= '/board/detail?bno=' + bno+ '&pageNo=${s.pageNo}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}';
         }
     });
 
