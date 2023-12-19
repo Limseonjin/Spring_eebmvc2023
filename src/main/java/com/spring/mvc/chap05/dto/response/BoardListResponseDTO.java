@@ -1,4 +1,4 @@
-package com.spring.mvc.chap05.dto;
+package com.spring.mvc.chap05.dto.response;
 
 //DB에서 가져온 순수한 날것의 데이터를 가공해서 저장하고 있는 객체
 
