@@ -55,9 +55,9 @@
         </div>
 
         <div class="amount">
-            <a href="/board/list?amount=6&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">6</a>
-            <a href="/board/list?amount=18&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">18</a>
-            <a href="/board/list?amount=30&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">30</a>
+           <div> <a href="/board/list?amount=6&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">6</a></div>
+           <div><a href="/board/list?amount=18&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">18</a></div>
+           <div><a href="/board/list?amount=30&pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">30</a></div>
         </div>
 
     </div>

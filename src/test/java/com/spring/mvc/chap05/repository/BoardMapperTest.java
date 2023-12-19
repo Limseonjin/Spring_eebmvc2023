@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.common.Search;
 import com.spring.mvc.chap05.entity.Board;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class BoardMapperTest {
     @DisplayName("게시물 전체조회하면 300개의 게시물이 조회댄다.")
     void findAll(){
         //when
-        List<Board> all = mapper.findAll();
+        List<Board> all = mapper.findAll(new Search());
         //then
         assertEquals(300,all.size());
     }

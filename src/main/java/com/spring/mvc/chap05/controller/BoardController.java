@@ -7,6 +7,7 @@ import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +20,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
     private final BoardService boardService;
     // 1. 목록 조회 요청 (/board/list : GET)
     @GetMapping("/list")
     public String list(@ModelAttribute("s") Search page, Model model){
-        System.out.println("/list Get!");
-        System.out.println(page);
+        log.info("/list Get!");
+        log.debug("pageNo:{}, amount:{}",page.getPageNo(),page.getAmount());
         List<BoardListResponseDTO> dtoList = boardService.getList(page);
 
         // 페이징 계산 알고리즘 적용
