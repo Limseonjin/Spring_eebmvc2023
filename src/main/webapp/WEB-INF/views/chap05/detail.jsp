@@ -259,37 +259,44 @@
         // 화면에 댓글 태그들을 렌더링하는 함수
         function renderReplies( { replies, count, pageInfo }){
             let tag = '';
-            for (let reply of replies){
-                const { rno, writer, text, regDate } = reply;
-                tag += `
-                <div id='replyContent' class='card-body' data-replyId='\${rno}'>
-                    <div class='row user-block'>
-                        <span class='col-md-3'>
-                            <b>\${writer}</b>
-                        </span>
-                        <span class='offset-md-6 col-md-3 text-right'><b>\${regDate}</b></span>
-                    </div><br>
-                    <div class='row'>
-                        <div class='col-md-8'>\${text}</div>
-                        <div class='col-md-2 col-md-4 text-right'>
-                            <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>
-                            수정
-                            </a>&nbsp;
-                            <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>
-                            삭제
-                            </a>
-                        </div>
 
-                    </div>
-                </div>
-            `;
-                //댓글 수 렌더링
-                document.getElementById('replyCnt').innerHTML = count;
-                //댓글 렌더링
-                document.getElementById('replyData').innerHTML =tag;
-                //페이지 렌더링
-                renderPage(pageInfo);
+            if(replies != null && replies.length > 0){
+                for (let reply of replies){
+                    const { rno, writer, text, regDate } = reply;
+                    tag += `
+                        <div id='replyContent' class='card-body' data-replyId='\${rno}'>
+                            <div class='row user-block'>
+                                <span class='col-md-3'>
+                                    <b>\${writer}</b>
+                                </span>
+                                <span class='offset-md-6 col-md-3 text-right'><b>\${regDate}</b></span>
+                            </div><br>
+                            <div class='row'>
+                                <div class='col-md-8'>\${text}</div>
+                                <div class='col-md-2 col-md-4 text-right'>
+                                    <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>
+                                    수정
+                                    </a>&nbsp;
+                                    <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>
+                                    삭제
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        `;
+
+                }//end for
+            }//end if
+            else{
+                tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>";
             }
+            //댓글 수 렌더링
+            document.getElementById('replyCnt').innerHTML = count;
+            //댓글 렌더링
+            document.getElementById('replyData').innerHTML =tag;
+            //페이지 렌더링
+            renderPage(pageInfo);
         }
         // 서버에 실시간으로 비동기통신을 해서 JSON을 받아오는 함수
         function fetchGetReplies(page=1) {
@@ -382,7 +389,32 @@
             const $replyData = document.getElementById('replyData');
             $replyData.onclick = e =>{
                 e.preventDefault();
-                console.log("삭제버튼 클릭~")
+                if (e.target.matches('#replyDelBtn')){
+                    // console.log("삭제버튼 클릭~")
+                    if (!confirm('정말 삭제할까요??')){
+                        return
+                    }
+                    //댓글번호 찾기
+                    const rno = e.target.closest('#replyContent').dataset.replyid;
+                    console.log(rno)
+                    const requestInfo = {
+                        method : 'DELETE'
+                    }
+                    //서버에 비동기 요청
+                    fetch(`\${URL}/\${rno}`,requestInfo)
+                        .then (res =>{
+                            if (res.status === 200){
+                                alert('댓글이 삭제되었습다')
+                                return res.json();
+                            }else{
+                                alert('댓글삭제 실패했슴다');
+                                return;
+                            }
+                        })
+                        .then(responseResult =>{
+                            renderReplies(responseResult);
+                        })
+                }
             }
         }
         //========== 메인 실행부 ==========//
