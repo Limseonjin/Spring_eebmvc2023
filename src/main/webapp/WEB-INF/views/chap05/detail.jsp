@@ -270,8 +270,15 @@
                         <span class='offset-md-6 col-md-3 text-right'><b>\${regDate}</b></span>
                     </div><br>
                     <div class='row'>
-                        <div class='col-md-6'>\${text}</div>
-                        <div class='et-md-2 col-md-4 text-right'></div>
+                        <div class='col-md-8'>\${text}</div>
+                        <div class='col-md-2 col-md-4 text-right'>
+                            <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>
+                            수정
+                            </a>&nbsp;
+                            <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>
+                            삭제
+                            </a>
+                        </div>
 
                     </div>
                 </div>
@@ -290,7 +297,7 @@
             fetch(`\${URL}/\${bno}/page/\${page}`)
                 .then(res => res.json())
                 .then(replyList => {
-                    console.log(replyList);
+                    //console.log(replyList);
                     renderReplies(replyList);
                 })
             ;
@@ -310,9 +317,76 @@
                 fetchGetReplies(e.target.getAttribute('href'))
             }
 
-        };
+        }
 
+        function makeReplyPostClickEvent() {
+            const $addBtn = document.getElementById('replyAddBtn');
+            $addBtn.onclick = e => {
+                const $replyText = document.getElementById('newReplyText');
+                const $replyWriter = document.getElementById('newReplyWriter');
+
+                // console.log($replyText.value);
+                // console.log($replyWriter.value);
+
+                const textVal = $replyText.value;
+                const writerVal = $replyWriter.value;
+
+                //사용자 입력값 검증
+                if (textVal.trim() === '') {
+                    alert('댓글 내용은 필수값입니다.');
+                    return;
+                } else if (writerVal.trim() === '') {
+                    alert('댓글 작성자는 필수값입니다.!!');
+                    return
+                } else if (writerVal.trim().length < 2 || writerVal.trim > 8) {
+                    alert('댓글 작성자는 2~8글자 사이로 작성!')
+                    return
+                }
+
+                const payload = {
+                    text: $replyText.value,
+                    author: $replyWriter.value,
+                    bno: bno
+                }
+                //GET방식을 제외한 요청의 정보 만들기
+                const requestInfo = {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(payload) //JSON으로 변환하는 코드
+                }
+                //서버에 POST요청 보내기
+                fetch(URL, requestInfo)
+                    .then(res => {
+                        if (res.status === 200) {
+                            alert('댓글이 정상 등록되었습니단');
+                            return res.json();
+                        } else {
+                            alert('댓글 등록에 실패했습니단!');
+                            return res.text();
+                        }
+                    })
+                    .then(responseData => {
+                        console.log(responseData)
+                        // 입력창 비우고 새로운 목록 리렌더링
+                        $replyWriter.value = '';
+                        $replyText.value = '';
+
+                        fetchGetReplies(responseData.pageInfo.finalPage);
+                    });
+            }
+        }
+        //댓글 삭제 이벤트 핸들러 등록 및 처리 함수
+        function makeReplyRemoveClickEvent() {
+            const $replyData = document.getElementById('replyData');
+            $replyData.onclick = e =>{
+                e.preventDefault();
+                console.log("삭제버튼 클릭~")
+            }
+        }
         //========== 메인 실행부 ==========//
+
 
         // 즉시 실행함수
         (() => {
@@ -322,6 +396,12 @@
 
             //페이지 번호 클릭 이벤트 핸들러처리
             makePageButtonClickEvent();
+
+            //댓글 등록 클릭 이벤트 핸들러 처리
+            makeReplyPostClickEvent();
+
+            //댓글 삭제 클릭 이벤트 핸들러 처리
+            makeReplyRemoveClickEvent();
         })();
 
 
