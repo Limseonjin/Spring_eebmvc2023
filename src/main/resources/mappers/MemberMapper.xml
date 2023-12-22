@@ -18,7 +18,7 @@
     <select id="isDuplicate" resultType="boolean">
         SELECT COUNT(*)
         FROm tbl_member
-        <if test="type == 'acount'">
+        <if test="type == 'account'">
             WHERE account = #{keyword}
         </if>
         <if test="type == 'email'">

@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.common.Page;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.entity.Reply;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +60,7 @@ class ReplyMapperTest {
         //given
         long boardNo = 77L;
         //when
-        List<Reply> replyList = replyMapper.findAll(boardNo);
+        List<Reply> replyList = replyMapper.findAll(boardNo,new Page());
 
         //then
         assertEquals(14, replyList.size());
@@ -81,7 +82,7 @@ class ReplyMapperTest {
 
         //then
         assertNull(reply);
-        assertEquals(13, replyMapper.findAll(boardNo).size());
+        assertEquals(13, replyMapper.findAll(boardNo,new Page()).size());
     }
 
 

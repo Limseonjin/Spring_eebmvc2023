@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.repository;
 
 import com.spring.mvc.chap05.entity.Member;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberMapper {
@@ -18,6 +19,6 @@ public interface MemberMapper {
      * @return 중복이면 true, 아니면 false
      */
 
-    boolean isDuplicate(String type, String keyword);
+    boolean isDuplicate(@Param("type") String type,@Param("keyword") String keyword);
 
 }
