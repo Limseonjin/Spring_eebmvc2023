@@ -6,8 +6,10 @@ import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static com.spring.mvc.chap05.service.LoginResult.*;
 import static com.spring.mvc.chap05.service.LoginResult.NO_PW;
@@ -43,5 +45,9 @@ public class MemberSerivce {
         }
         log.info("{}님 로그인 성공!",foundMember.getAccount());
         return SUCCESS;
+    }
+    //아이디, 이메일 중복검사 서비스
+    public boolean checkDuplicateValue(String type, String keyword){
+        return memberMapper.isDuplicate(type,keyword);
     }
 }
