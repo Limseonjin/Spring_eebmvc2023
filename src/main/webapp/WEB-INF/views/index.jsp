@@ -31,6 +31,22 @@
     %>
 
     <%@ include file="include/header.jsp"%>
-    <h1><%= userName %>님 하이하이요!</h1>
+<%--    <h1><%= userName %>님 하이하이요!</h1>--%>
+<%--
+        서버에서 Model이나 RedirectAttributes에 담아 놓은 데이터는
+        ${requestScope.aa} <-로 참조 가능 requestScope를 생략가능
+
+        세션에 담은 데이터는
+        ${sessionScope.aaa}로 참조가능.
+        Model에 같은 이름없으면 sessionScope 생략 가능
+--%>
+    <c:if test="${login == null}">
+        <h1>방문자님 안뇽하내용</h1>
+    </c:if>
+    <c:if test="${login != null}">
+        <h1>${login.nickName}(${login.account})님 어서오세욘</h1>
+    </c:if>
+
+
 </body>
 </html>
