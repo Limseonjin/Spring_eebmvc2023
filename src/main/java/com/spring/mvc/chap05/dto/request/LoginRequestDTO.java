@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 
-@Getter @ToString
+@Setter @Getter @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
