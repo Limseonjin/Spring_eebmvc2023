@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -63,6 +66,7 @@ public class MemberController {
             //Model에 담긴 데이터는 redirect시 jsp로 전달 X
             // redirect는 요청이 2번 들어가서 첫번째 요청시 보관한 데이터가 소실됨
             , RedirectAttributes ra
+            , HttpServletResponse response
     ){
         log.info("/memebers/sign-in POST!");
         log.info("parameter : {}",dto);
@@ -74,8 +78,21 @@ public class MemberController {
         ra.addFlashAttribute("msg",authenticate);
 
         if (authenticate == LoginResult.SUCCESS){ //로그인 성공시
-            return "redirect:/board/list";
+            makeLoginCookie(dto, response);
+
+            return "redirect:/";
         }
         return "redirect:/members/sign-in";
+    }
+
+    private static void makeLoginCookie(LoginRequestDTO dto, HttpServletResponse response) {
+        // 쿠키에 로그인 기록을 저장
+        Cookie cookie = new Cookie("login", dto.getAccount());
+        // 쿠키 정보 세팅
+        cookie.setPath("/"); // 이 쿠키는 모든 경로에서 들고 다녀야 함
+        cookie.setMaxAge(60); // 쿠키 수명 설정
+
+        //쿠키를 클라이언트에게 전송  (Response객체 필요)
+        response.addCookie(cookie);
     }
 }

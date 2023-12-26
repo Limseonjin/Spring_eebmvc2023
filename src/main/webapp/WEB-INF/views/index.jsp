@@ -5,8 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Study</title>
+    <%@ include file="include/static-header.jsp"%>
+    <style>
+        h1 {
+            margin: 200px auto;
+            width: 40%;
+            font-size: 40px;
+            font-weight: 700;
+            color: orange;
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body>
-    <h1>하이하이요!</h1>
+    <%
+        String userName = "방문자";
+        // 클라이언트에게 쿠키를 검사
+        Cookie[] cookies = request.getCookies();
+        for (Cookie c : cookies) {
+            if (c.getName().equals("login")){
+                userName = c.getValue();
+            }
+        }
+    %>
+
+    <%@ include file="include/header.jsp"%>
+    <h1><%= userName %>님 하이하이요!</h1>
 </body>
 </html>
