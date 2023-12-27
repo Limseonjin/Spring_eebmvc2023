@@ -29,7 +29,12 @@ public class MemberController {
 
     //회원 가입 양식 요청
     @GetMapping("/sign-up")
-    public String signUp(){
+    public String signUp(HttpSession session)
+    {
+        //로그인 했을시 회원가입 페이지 이동 x
+//        if (session.getAttribute("login") !=null){
+//            return "redirect:/";
+//        }
         log.info("/members/sign-up GET : forwarding to sign-up.jsp");
         return "members/sign-up";
     }
