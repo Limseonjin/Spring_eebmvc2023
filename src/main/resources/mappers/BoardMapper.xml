@@ -24,8 +24,8 @@
     </select>
     <insert id="save">
         INSERT INTO tbl_board
-        (title, content)
-        VALUES ( #{title},#{content})
+        (title, content, account)
+        VALUES ( #{title},#{content},#{account})
     </insert>
     <delete id="deleteByNo">
         DELETE FROM tbl_board

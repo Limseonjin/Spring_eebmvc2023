@@ -13,13 +13,13 @@ public class BoardRepositoryImpl implements BoardRepository {
     private static int sequence;
     static {
         boardMap = new HashMap<>();
-        Board data1 = new Board(++sequence, "반가워횽", "안녕하쎄욘", 5, LocalDateTime.now());
-        Board data2 = new Board(++sequence, "이쒸", "안녕하쎄욘", 0, LocalDateTime.now());
-        Board data3 = new Board(++sequence, "우애잉", "안녕하쎄욘", 0, LocalDateTime.now());
-
-        boardMap.put(data1.getBoardNo(),data1);
-        boardMap.put(data2.getBoardNo(),data2);
-        boardMap.put(data3.getBoardNo(),data3);
+//        Board data1 = new Board(++sequence, "반가워횽", "안녕하쎄욘", 5, LocalDateTime.now());
+//        Board data2 = new Board(++sequence, "이쒸", "안녕하쎄욘", 0, LocalDateTime.now());
+//        Board data3 = new Board(++sequence, "우애잉", "안녕하쎄욘", 0, LocalDateTime.now());
+//
+//        boardMap.put(data1.getBoardNo(),data1);
+//        boardMap.put(data2.getBoardNo(),data2);
+//        boardMap.put(data3.getBoardNo(),data3);
 
     }
 
