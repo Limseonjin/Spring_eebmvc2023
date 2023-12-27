@@ -4,6 +4,7 @@ import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberSerivce;
+import com.spring.mvc.util.LoginUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -104,7 +105,7 @@ public class MemberController {
         // 세션 얻ㄱ기
 //        HttpSession session = request.getSession();
         // 세션에서 로그인 정보 기록 삭제
-        session.removeAttribute("login");
+        session.removeAttribute(LoginUtils.LOGIN_KEY);
         // 세션을 초기화 (RESET)
         session.invalidate();
 

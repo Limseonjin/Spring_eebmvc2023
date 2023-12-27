@@ -5,6 +5,7 @@ import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.dto.response.LoginUserResponseDTO;
 import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.repository.MemberMapper;
+import com.spring.mvc.util.LoginUtils;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.service.LoginResult.*;
+import static com.spring.mvc.util.LoginUtils.LOGIN_KEY;
 
 @Service
 @Slf4j
@@ -81,10 +83,11 @@ public class MemberSerivce {
                 .account(member.getAccount())
                 .email(member.getEmail())
                 .nickName(member.getName())
+                .auth(member.getAuth().toString())
                 .build();
 
         //세션에 로그인한 회원의 정보를 저장
-        session.setAttribute("login",dto);
+        session.setAttribute(LOGIN_KEY,dto);
 
         //세션도 수명을 설정해야 함
         session.setMaxInactiveInterval(60 * 60); //1시간

@@ -1,5 +1,6 @@
 package com.spring.mvc.interceptor;
 
+import com.spring.mvc.util.LoginUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static com.spring.mvc.util.LoginUtils.isLogin;
 
 @Configuration
 @Slf4j
@@ -19,9 +22,11 @@ public class AfterLoginInterceptor implements HandlerInterceptor {
             HttpServletRequest request,
             HttpServletResponse response,
             Object handler) throws Exception {
+
         log.info("afterLoginInterceptor execute! ");
         HttpSession session = request.getSession();
-        if (session.getAttribute("login") != null){
+
+        if (isLogin(session)){
             response.sendRedirect("/");
             return false; //ㅂㅂ
         }
