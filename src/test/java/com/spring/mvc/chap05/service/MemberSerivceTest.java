@@ -41,7 +41,7 @@ class MemberSerivceTest {
                 .password("kkk1234!")
                 .build();
         //when
-        LoginResult authenticate = memberSerivce.authenticate(kitty);
+        LoginResult authenticate = memberSerivce.authenticate(kitty,null,null);
         //then
         assertEquals(NO_ACC,authenticate);
     }
