@@ -27,7 +27,7 @@ class MemberSerivceTest {
                 .email("kitty@gmail.com")
                 .build();
         //when
-        boolean flag = memberSerivce.join(dto);
+        boolean flag = memberSerivce.join(dto, savePath);
         //then
         assertTrue(flag);
     }

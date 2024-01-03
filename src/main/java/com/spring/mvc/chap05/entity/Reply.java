@@ -45,4 +45,5 @@ public class Reply {
     private long boardNo;
     @Setter
     private String account;
+    private String profileImage;
 }

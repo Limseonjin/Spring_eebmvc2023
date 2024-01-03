@@ -43,7 +43,7 @@
             font-size: 20px;
         }
 
-        #title {
+        #title, #writer {
             font-size: 18px;
             width: 100%;
             padding: 8px;
@@ -114,6 +114,25 @@
             background: #888 !important;
             color: #fff !important;
         }
+        /* 댓글 프로필 */
+        .profile-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+        .profile-box img {
+            width: 100%;
+        }
+
+        .reply-profile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+
+        }
     </style>
 </head>
 <body>
@@ -153,6 +172,16 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <div class="profile-box">
+                                        <c:choose>
+                                            <c:when test="${login.profile != null}">
+                                                <img src="/local${login.profile}" alt="프사">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="/assets/img/anonymous.jpg" alt="프사">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                     <label for="newReplyWriter" hidden>댓글 작성자</label>
                                     <input id="newReplyWriter" name="replyWriter" type="text"
                                            class="form-control" placeholder="작성자 이름"
@@ -274,17 +303,21 @@
 
             if(replies != null && replies.length > 0){
                 for (let reply of replies){
-                    const { rno, writer, text, regDate, account } = reply;
+                    const { rno, writer, text, regDate, account,profile } = reply;
                     tag += `
                         <div id='replyContent' class='card-body' data-replyId='\${rno}'>
                             <div class='row user-block'>
-                                <span class='col-md-3'>
-                                    <b>\${writer}</b>
+                                <span class='col-md-8'> `
+                        tag+= (profile ?
+                            `<img class='reply-profile' src='/local\${profile}' alt='profile image'`
+                            : `<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='anonymous image'`)
+                        tag +=`<b>\${writer}</b>
                                 </span>
-                                <span class='offset-md-6 col-md-3 text-right'><b>\${regDate}</b></span>
+                                <span class='col-md-4 text-right'><b>\${regDate}</b></span>
                             </div><br>
                             <div class='row'>
                                 <div class='col-md-8'>\${text}</div>
+
                                 <div class='col-md-3 col-md-4 text-right'>`;
 
                             if( auth === 'ADMIN' || currentAccount === account)
@@ -315,7 +348,7 @@
             fetch(`\${URL}/\${bno}/page/\${page}`)
                 .then(res => res.json())
                 .then(replyList => {
-                    //console.log(replyList);
+                    console.log(replyList);
                     renderReplies(replyList);
                 })
             ;

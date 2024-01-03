@@ -18,5 +18,6 @@ public class Member {
     private LocalDateTime regDate;
     private String sessonId;
     private LocalDateTime limitTime;
+    private String profileImage;
 
 }
