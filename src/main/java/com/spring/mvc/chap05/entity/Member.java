@@ -20,4 +20,7 @@ public class Member {
     private LocalDateTime limitTime;
     private String profileImage;
 
+    private LoginMethode loginMethode;
+
+
 }

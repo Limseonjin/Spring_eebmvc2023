@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.service;
 
 import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.dto.response.KaKaoUserResponseDTO;
+import com.spring.mvc.chap05.entity.LoginMethode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -41,6 +42,7 @@ public class SnsLoginService {
                             .password("0000")
                             .name(nickname)
                             .email(nickname+"@ac.c")
+                            .loginMethode(LoginMethode.KAKAO)
                             .build(),
                     kakaoUserInfo.getProperties().getProfileImage()
             );

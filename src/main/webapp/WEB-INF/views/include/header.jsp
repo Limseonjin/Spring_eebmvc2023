@@ -17,12 +17,12 @@
             </c:if>
 
             <c:if test="${login != null && login.profile != null}">
-                <img src="/local${login.profile}" alt="프사">
+                <img src="${login.profile}" alt="프사">
             </c:if>
         </div>
         <h2 class="intro-text">
             Welcome ${login == null ? '' : login.nickName}
-        </h2>
+        </h2>x
         <a href="#" class="menu-open">
             <span class="menu-txt">MENU</span>
             <span class="lnr lnr-menu"></span>

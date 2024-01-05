@@ -4,6 +4,7 @@ import com.spring.mvc.chap05.dto.request.AutoLoginDTO;
 import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
 import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.dto.response.LoginUserResponseDTO;
+import com.spring.mvc.chap05.entity.LoginMethode;
 import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class MemberSerivce {
 
     // 회원가입 처리 서비스
     public boolean join(SignUpRequestDTO dto, String savePath) {
+        savePath =  "/local" + savePath;
+        dto.setLoginMethode(LoginMethode.COMMON);
 
         // 클라이언트가 보낸 회원가입 데이터를
         // 패스워드 인코딩하여 엔터티로 변환해서 전달
@@ -118,6 +121,7 @@ public class MemberSerivce {
                 .nickName(member.getName())
                 .auth(member.getAuth().name())
                 .profile(member.getProfileImage())
+                .loginMethod(member.getLoginMethode().toString())
                 .build();
 
         //세션에 로그인한 회원의 정보를 저장

@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.dto.request;
 
+import com.spring.mvc.chap05.entity.LoginMethode;
 import com.spring.mvc.chap05.entity.Member;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ public class SignUpRequestDTO {
     //프로필 사진 파일
     private MultipartFile profileImage;
 
+    private LoginMethode loginMethode;
     //엔터티로 변환하는 유틸메서드
     public Member toEntity(PasswordEncoder encoder, String savePath){
         return Member.builder()
@@ -38,6 +40,7 @@ public class SignUpRequestDTO {
                 .email(email)
                 .name(name)
                 .profileImage(savePath)
+                .loginMethode(loginMethode)
                 .build();
     }
 }

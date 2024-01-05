@@ -5,9 +5,9 @@
 <mapper namespace="com.spring.mvc.chap05.repository.MemberMapper">
     <insert id="save">
         INSERT INTO tbl_member
-        (account, password, name, email, profile_image)
+        (account, password, name, email, profile_image,login_methode)
         VALUES
-        (#{account}, #{password}, #{name}, #{email}, #{profileImage})
+        (#{account}, #{password}, #{name}, #{email}, #{profileImage},#{login_methode})
     </insert>
 
     <select id="findMember" resultType="member">
